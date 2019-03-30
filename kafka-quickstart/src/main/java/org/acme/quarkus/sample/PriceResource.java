@@ -1,6 +1,8 @@
 package org.acme.quarkus.sample;
 
 import io.smallrye.reactive.messaging.annotations.Stream;
+
+import org.eclipse.microprofile.reactive.streams.operators.ReactiveStreams;
 import org.reactivestreams.Publisher;
 
 import javax.inject.Inject;
@@ -29,6 +31,7 @@ public class PriceResource {
     @Path("/stream")
     @Produces(MediaType.SERVER_SENT_EVENTS)
     public Publisher<Double> stream() {
-        return prices;
+        ///return ReactiveStreams.of(10.4, 10.5).buildRs();
+       return ReactiveStreams.fromPublisher(prices).map(i -> (i + 300.0)).buildRs();
     }
 }
